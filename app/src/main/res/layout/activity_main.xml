@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/cypher_translate"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
