@@ -4,7 +4,7 @@ import android.widget.ProgressBar;
 
 public class Cypher {
 
-    public static String rightShift(String text, int shift) {
+    public static String leftShift(String text, int shift) {
         if (text != null) {
             String newText = "";
             for (int i = 0; i < text.length(); i++) {
@@ -13,17 +13,17 @@ public class Cypher {
                 if ((unicode >= 'A' && unicode <= 'Z') || ((unicode >= 'a' && unicode <= 'z'))) {
                     for (int j = 0; j < shift; j++) {
 
-                        unicode++;
+                        unicode--;
 
-                        if (unicode > 'Z' && unicode < 'a') {
+                        if (unicode < 'A') {
 
-                            unicode = 'A';
+                            unicode = 'Z';
 
                         }
 
-                        if (unicode > 'z') {
+                        if (unicode > 'Z' && unicode < 'a') {
 
-                            unicode = 'a';
+                            unicode = 'z';
 
                         }
 
