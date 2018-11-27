@@ -34,15 +34,22 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CharSequence cypherText = cypherTV.getText();
+                cypherTask = (new CypherTask()).execute(cypherText.toString());
             }
         });
     }
 
     public class CypherTask extends AsyncTask<String, Integer, String>{
+
+
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            bar.setVisibility(View.VISIBLE);
+            bar.setMax(3);
+
         }
 
         @Override
