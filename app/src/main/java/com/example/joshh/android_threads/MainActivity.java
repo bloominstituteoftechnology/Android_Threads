@@ -60,6 +60,40 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground( String... strings) {
+            /*int shiftAmount = Integer.parseInt(shiftTextValue.getText().toString());
+            if (strings[0] != null) {
+                StringBuilder newString = new StringBuilder();
+                for (int i = 0; i < strings[0].length(); i++) {
+                    if (shiftAmount >= 0) {
+                        if (Character.isLowerCase(strings[0].charAt(i))) {
+                            newString.append((char) ('a' + (26 + strings[0].charAt(i) - 'a' - shiftAmount % 26) % 26));
+                        } else if (Character.isUpperCase(strings[0].charAt(i))) {
+                            newString.append((char) ('A' + (26 + strings[0].charAt(i) - 'A' - shiftAmount % 26) % 26));
+                        } else {
+                            newString.append(strings[0].charAt(i));
+                        }
+                    } else {
+                        if (Character.isLowerCase(strings[0].charAt(i))) {
+                            newString.append((char) ('a' + ((strings[0].charAt(i) - 'a' - shiftAmount) % 26)));
+                        } else if (Character.isUpperCase(strings[0].charAt(i))) {
+                            newString.append((char) ('A' + ((strings[0].charAt(i) - 'A' - shiftAmount) % 26)));
+                        } else {
+                            newString.append(strings[0].charAt(i));
+                        }
+                    }
+                    if(lettersShifted % 40 == 0){
+                        publishProgress(lettersShifted);
+                        if(isCancelled()){
+                            progressBar.setVisibility(View.GONE);
+                            cipherTextView.setText(newString);
+                            return newString.toString();
+                        }
+                    }
+                    lettersShifted++;
+                }
+                return newString.toString();
+            }
+            return "";*/
             if (strings[0] != null) {
                 String newText  = "";
                 int shiftAmount = Integer.parseInt(shiftTextValue.getText().toString());
@@ -94,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
                         if ((unicode >= 'A' && unicode <= 'Z') || ((unicode >= 'a' && unicode <= 'z'))) {
                             for (int n = 0; n > shiftAmount; n--) {
                                 unicode--;
-                                if (unicode > 'Z' && unicode < 'a') {
-                                    unicode = 'A';
+                                if (unicode < 'a' && unicode > 'Z') {
+                                    unicode = 'z';
                                 }
-                                if (unicode > 'z') {
-                                    unicode = 'a';
+                                if (unicode < 'A') {
+                                    unicode = 'Z';
                                 }
                             }
                         }
