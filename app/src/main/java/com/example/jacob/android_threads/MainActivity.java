@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.text_main_content);
         editText = findViewById(R.id.edit_shift);
         String unShiftedString = getResources().getString(R.string.contents_shifted);
-        int shiftAmount = Integer.parseInt(editText.getText().toString());
+        String shiftAmount = editText.getText().toString();
 
-        new offloadTask().execute();
+        new offloadTask().execute(unShiftedString,shiftAmount);
     }
 
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class offloadTask extends AsyncTask<Void, Integer, String> {
+    public class offloadTask extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
+            textView.setText(s);
         }
 
         @Override
@@ -81,10 +82,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(Void... voids) {
-//            String shiftedString = shiftCypher(unShiftedString, shiftAmount);
-//            return shiftedString;
-            return null;
+        protected String doInBackground(String... params) {
+            String shiftedString = shiftCypher(params[0], Integer.parseInt(params[1]));
+            return shiftedString;
         }
     }
 
