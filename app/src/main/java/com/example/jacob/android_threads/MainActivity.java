@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     EditText editText;
     Context context;
+    Button button;
 
 
     @Override
@@ -22,14 +24,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-         progressBar = findViewById(R.id.progress_bar);
+        progressBar = findViewById(R.id.progress_bar);
+        button = findViewById(R.id.button_update);
 
-        textView = findViewById(R.id.text_main_content);
-        editText = findViewById(R.id.edit_shift);
-        String unShiftedString = getResources().getString(R.string.contents_shifted);
-        String shiftAmount = editText.getText().toString();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView = findViewById(R.id.text_main_content);
+                editText = findViewById(R.id.edit_shift);
+                String unShiftedString = getResources().getString(R.string.contents_shifted);
+                String shiftAmount = editText.getText().toString();
 
-        new offloadTask().execute(unShiftedString,shiftAmount);
+                new offloadTask().execute(unShiftedString, shiftAmount);
+
+            }
+        });
+
+
     }
 
 
@@ -83,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+//            String[] arrayOfStrings = params[0].split(Character.toString((char)13));
+
+
             String shiftedString = shiftCypher(params[0], Integer.parseInt(params[1]));
             return shiftedString;
         }
