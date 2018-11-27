@@ -3,6 +3,7 @@ package com.thadocizn.threading;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     TextView msg;
     EditText shift;
     ProgressBar progressBar;
+    AsyncTask task;
     private String strMsg;
 
     @Override
@@ -30,11 +33,21 @@ public class MainActivity extends AppCompatActivity {
                 strMsg = msg.getText().toString();
                 progressBar.setMax(strMsg.length());
 
-                new Task().execute();
+                task = new Task().execute();
 
             }
         });
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (task != null){
+            task.cancel(true);
+            Log.i(TAG, "onStop" + " " + task.isCancelled());
+        }
     }
 
     public class Task extends AsyncTask<Void, Integer, String>{
@@ -64,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             super.onCancelled();
+            Log.i(TAG, "onCanceled" + " " + task.isCancelled());
+
         }
 
         @Override
@@ -90,7 +105,11 @@ public class MainActivity extends AppCompatActivity {
                     counter++;
                     newText += unicode;
                     publishProgress(counter);
-
+                    if (isCancelled()){
+                        progressBar.setVisibility(View.GONE);
+                        msg.setText(strMsg);
+                        shift.setText(0);
+                    }
 
                 }
                 return newText;
