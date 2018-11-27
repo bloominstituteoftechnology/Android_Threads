@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ((Button) findViewById(R.id.button_cancel)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (task != null) {
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class offloadTask extends AsyncTask<String, Integer, String> {
+
+        public static final int progressResolution = 50;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -103,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
                     shift = shift % -26;
                     shift = 26 + shift;
                 }
-                int temp = params[0].length();
-                for (int i = 0; i < params[0].length(); ++i) {
+                int loops = params[0].length();
+
+                for (int i = 0; i < loops; ++i) {
                     char unicode = params[0].charAt(i);
                     if ((unicode >= 'A' && unicode <= 'Z') || ((unicode >= 'a' && unicode <= 'z'))) {
                         for (int n = 0; n < shift; ++n) {
@@ -119,12 +123,12 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     //Add some pi digits calculations to slow it down a little
-                    Log.i("piCalc=",pi_digits(100));
+                    Log.i("piCalc=", pi_digits(100));
 
-                    if (i % 1000 == 0) {
+                    if (i % Math.round(loops/ progressResolution) == 0) {
                         publishProgress(i);
                         if (isCancelled()) {
-                            outputStringBuilder.append("...[canceled.  Press Update to refresh.]");
+                            outputStringBuilder.append("...[Processing canceled.  Press Update to refresh.]");
                             return outputStringBuilder.toString();
                         }
                     }
@@ -137,18 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-/*    public static String tempTest(String inputString, int shift) {
-        //            String[] arrayOfStrings = params[0].split(Character.toString((char) 10));
-//            String[] arrayOfStrings = params[0].split( "'. '");
-//            int temp = arrayOfStrings.length;
-//
-//            String shiftedString = shiftCypher(params[0], Integer.parseInt(params[1]));
-//            return shiftedString;
-
-        return null;
-    }*/
-
 
     public static String pi_digits(int digits) {
         int SCALE = 10000;
