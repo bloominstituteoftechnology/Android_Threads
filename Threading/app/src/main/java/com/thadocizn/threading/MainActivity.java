@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     TextView msg;
     EditText shift;
     ProgressBar progressBar;
+    private String strMsg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,10 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
         msg = findViewById(R.id.textViewMsg);
         shift = findViewById(R.id.editTextShift);
+        progressBar = findViewById(R.id.progressBar);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                strMsg = msg.getText().toString();
+                progressBar.setMax(strMsg.length());
+
                 new Task().execute();
 
             }
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            msg.setText(values[0].toString());
+            progressBar.setProgress(values[0]);
         }
 
         @Override
@@ -62,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String strMsg = msg.getText().toString();
             int shifted = Integer.parseInt(shift.getText().toString());
+            int counter = 0;
 
             if (strMsg != null) {
                 String newText = "";
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     if ((unicode >= 'A' && unicode <= 'Z') || ((unicode >= 'a' && unicode <= 'z'))) {
                         for (int n = 0; n < shifted; ++n) {
                             ++unicode;
+
                             if (unicode > 'Z' && unicode < 'a') {
                                 unicode = 'A';
                             }
@@ -80,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    counter++;
                     newText += unicode;
+                    publishProgress(counter);
+
 
                 }
                 return newText;
