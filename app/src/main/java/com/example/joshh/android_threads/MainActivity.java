@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.decode_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence cipherText = cipherTextView.getText();
-                Log.i("cipherTextValue", cipherText.toString());
-                cipherTextTask = (new CipherTextTask()).execute(cipherText.toString());
+                String cipherText = cipherTextView.getText().toString();
+                String shiftValue = shiftTextValue.getText().toString();
+                cipherTextTask = (new CipherTextTask()).execute(cipherText, shiftValue);
             }
         });
     }
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if(shiftAmount < 0){
                     for (int i = 0; i < strings[0].length(); i++) {
-                    char unicode = strings[0].charAt(i);
+                        char unicode = strings[0].charAt(i);
                         if ((unicode >= 'A' && unicode <= 'Z') || ((unicode >= 'a' && unicode <= 'z'))) {
                             for (int n = 0; n > shiftAmount; n--) {
                                 unicode--;
