@@ -46,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             String[] strFiles = getAssets().list("");
-            for (String strFile:strFiles) {
-                if ( strFile.endsWith(".txt")){
-                    textFiles.add(strFile);
+            if (strFiles != null) {
+                for (String strFile:strFiles) {
+                    if ( strFile.endsWith(".txt")){
+                        textFiles.add(strFile);
+                    }
                 }
             }
         } catch (IOException e) {
