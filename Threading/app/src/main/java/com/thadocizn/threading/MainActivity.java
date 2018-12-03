@@ -1,33 +1,59 @@
 package com.thadocizn.threading;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     TextView msg;
+    Spinner spinner;
     EditText shift;
     ProgressBar progressBar;
     AsyncTask task;
     private String strMsg;
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        context = this;
         msg         = findViewById(R.id.textViewMsg);
         shift       = findViewById(R.id.editTextShift);
         progressBar = findViewById(R.id.progressBar);
+        spinner     = findViewById(R.id.spinner);
+        ArrayList<String> textFiles = new ArrayList<>();
 
+
+        try {
+            String[] strFiles = getAssets().list("");
+            for (String strFile:strFiles) {
+                if ( strFile.endsWith(".txt")){
+                    textFiles.add(strFile);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, textFiles);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
