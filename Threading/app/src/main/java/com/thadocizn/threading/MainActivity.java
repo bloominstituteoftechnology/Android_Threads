@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        msg = findViewById(R.id.textViewMsg);
-        shift = findViewById(R.id.editTextShift);
+        msg         = findViewById(R.id.textViewMsg);
+        shift       = findViewById(R.id.editTextShift);
         progressBar = findViewById(R.id.progressBar);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.GONE);
             msg.setText(s);
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    counter++;
+                    ++counter;
                     newText += unicode;
                     publishProgress(counter);
                     if (isCancelled()){
