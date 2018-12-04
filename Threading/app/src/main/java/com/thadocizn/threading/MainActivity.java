@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
+        final File cacheDir = context.getCacheDir();
         msg         = findViewById(R.id.textViewMsg);
         shift       = findViewById(R.id.editTextShift);
         progressBar = findViewById(R.id.progressBar);
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnShift).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 strMsg = msg.getText().toString();
@@ -92,6 +96,30 @@ public class MainActivity extends AppCompatActivity {
 
                 task = new Task().execute();
 
+            }
+        });
+
+        findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newFileName = new StringBuilder().append(spinner.getSelectedItem().toString()).append(shift.getText().toString()).toString();
+                FileWriter writer = null;
+
+                try {
+                    File tempFile = File.createTempFile(newFileName, null, context.getCodeCacheDir());
+                    writer = new FileWriter(tempFile);
+                    writer.write(String.valueOf(new File(newFileName)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (writer != null){
+                        try {
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         });
 
