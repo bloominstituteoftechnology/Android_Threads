@@ -26,15 +26,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    String cipher(String msg, int shift){
+    String cipher(String msg, int shift) {
         String temp = "";
+        shift = shift%26;
         int length = msg.length();
-        for(int i = 0; i < length; i++){
-            char character = (char)(msg.charAt(i) + shift);
-            if (character > 'z')
-                temp += (char)(msg.charAt(i) - (26-shift));
-            else
-                temp += (char)(msg.charAt(i) + shift);
+        for (int i = 0; i < length; i++) {
+            char character = msg.charAt(i);
+            char shiftedChar = (char) (msg.charAt(i) + shift);
+            if (character >= 'A' && character <= 'Z') {
+                if (shiftedChar > 'Z') { //case where shiftedChar goes out of bounds (positive)
+                    temp += (char) (msg.charAt(i) - (26 - shift));
+                } else if (shiftedChar < 'A') { //case where shiftedChar goes out of bounds (negative)
+                    temp += (char) (msg.charAt(i) + (26 + shift));
+                } else { //case where shiftedChar is in bounds
+                    temp += (char) (msg.charAt(i) + shift);
+                }
+            } else if (character >= 'a' && character <= 'z') {
+                if (shiftedChar > 'z') { //case where shiftedChar goes out of bounds (positive)
+                    temp += (char) (msg.charAt(i) - (26 - shift));
+                } else if (shiftedChar < 'a') { //case where shiftedChar goes out of bounds (negative)
+                    temp += (char) (msg.charAt(i) + (26 + shift));
+                } else { //case where shiftedChar is in bounds
+                    temp += (char) (msg.charAt(i) + shift);
+                }
+            } else { //case where char isn't a letter, and shouldn't be shifted
+                temp += (char) (msg.charAt(i));
+            }
         }
         return temp;
     }

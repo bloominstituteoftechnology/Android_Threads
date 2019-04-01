@@ -44,6 +44,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:inputType="numberSigned"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@id/button"
         app:layout_constraintLeft_toRightOf="@id/button"
