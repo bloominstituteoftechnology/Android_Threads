@@ -14,11 +14,13 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewCypher;
     ProgressBar progressBar;
     Button buttonDecrypt;
+    AsyncTask cipher;
 
 
     @Override
     protected void onStop() {
         super.onStop();
+        cipher.cancel(true);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String textToDecrypt = textViewCypher.getText().toString();
                 String numberOfShifts = editTextShifts.getText().toString();
-                (new Cipher()).execute(new String[]{textToDecrypt, numberOfShifts});
+                cipher = (new Cipher()).execute(textToDecrypt, numberOfShifts);
             }
         });
     }
