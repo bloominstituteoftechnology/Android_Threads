@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
         cipherTextView = findViewById(R.id.cipher_data_text);
         userInput = findViewById(R.id.shift_input);
         shiftButton = findViewById(R.id.shift_button);
-        shift = Integer.parseInt(userInput.getText().toString());
         progressBar = findViewById(R.id.progress_bar);
         shiftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String cipher = cipherTextView.getText().toString();
+                shift = Integer.parseInt(userInput.getText().toString());
+                new DecryptCypherAsync().execute(cipher);
             }
         });
 
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+            progressBar.setVisibility(View.GONE);
+            cipherTextView.setText(s);
         }
 
         @Override
