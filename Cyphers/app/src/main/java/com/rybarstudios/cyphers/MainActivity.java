@@ -1,5 +1,6 @@
 package com.rybarstudios.cyphers;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,16 +28,50 @@ public class MainActivity extends AppCompatActivity {
         shiftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgressBar.setVisibility(View.VISIBLE);
                 String content = mTextView.getText().toString();
-                int charsToShift = Integer.parseInt(mEditText.getText().toString());
-                mTextView.setText(shift(content, charsToShift));
-                mProgressBar.setVisibility(View.GONE);
+                String charsToShift = mEditText.getText().toString();
+                new AddCypherAsync().execute(content, charsToShift);
             }
         });
     }
 
-    private StringBuilder shift(String content, int numToShift) {
+    class AddCypherAsync extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String content = strings[0];
+            int numToShift = Integer.parseInt(strings[1]);
+            String result = "";
+
+            for(int i = 0; i < content.length(); i++) {
+                if(Character.isUpperCase(content.charAt(i))) {
+                    char ch = (char)(((int)content.charAt(i) +
+                            numToShift - 65) % 26 + 65);
+                    result += ch;
+                }else if(Character.isLowerCase(content.charAt(i))){
+                    char ch = (char)(((int)content.charAt(i) +
+                            numToShift - 97) % 26 + 97);
+                    result += ch;
+                }else {
+                    result += content.charAt(i);
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mProgressBar.setVisibility(View.GONE);
+            mTextView.setText(result);
+        }
+    }
+
+/*    private StringBuilder shift(String content, int numToShift) {
         StringBuilder builder = new StringBuilder();
 
         for(int i = 0; i < content.length(); i++) {
@@ -53,5 +88,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return builder;
-    }
+    }*/
 }
