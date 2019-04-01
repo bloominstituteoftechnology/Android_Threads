@@ -17,7 +17,7 @@
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/test_text"/>
+            android:text="@string/contents_shifted"/>
 
     </ScrollView>
 

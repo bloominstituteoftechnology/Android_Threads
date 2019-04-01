@@ -610,5 +610,5 @@ zlwk doo wkhlu phodqfkrob vzhhwqhvv; L vhh klv wklq kdqg udlvhg lq
 dqlpdwlrq, zkloh wkh olqhdphqwv ri klv idfh duh luudgldwhg eb wkh vrxo
 zlwklq. Vwudqjh dqg kduurzlqj pxvw eh klv vwrub, iuljkwixo wkh vwrup zklfk
 hpeudfhg wkh jdoodqw yhvvho rq lwv frxuvh dqg zuhfnhg lw—wkxv!</string>
-    <string name="test_text">a</string>
+    <string name="test_text">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
 </resources>

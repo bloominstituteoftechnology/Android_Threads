@@ -34,18 +34,20 @@ public class MainActivity extends AppCompatActivity {
                 char[] textCharArray = text.toCharArray();
                 char[] textShifted = new char[textCharArray.length];
 
-                for(int i = 0; i < textCharArray.length - 1; i++){
+                for(int i = 0; i < textCharArray.length; i++){
                     for(int j = 0; j < lowerCase.length; j++){
-                        if(Character.isUpperCase(textCharArray[i])){
                             if(textCharArray[i] == upperCase[j]){
-                                textShifted[i] = upperCase[j%upperCase.length];
+                                textShifted[i] = upperCase[((j+key)%upperCase.length)];
+                                j=0;
+                                break;
+                            }else if(textCharArray[i] == lowerCase[j]) {
+                                textShifted[i] = lowerCase[((j + key) % lowerCase.length)];
+                                j=0;
+                                break;
                             }
-                        }else if(Character.isLowerCase(textCharArray[i])){
-                            textShifted[i] = lowerCase[j%lowerCase.length];
-                        }else{textShifted[i] = textCharArray[i];}
+                        }if(textShifted[i]=='\u0000'){textShifted[i] = textCharArray[i];}
                     }
-                }
-                tv.setText(textShifted.toString());
+                    tv.setText(String.valueOf(textShifted));
 
 
             }
