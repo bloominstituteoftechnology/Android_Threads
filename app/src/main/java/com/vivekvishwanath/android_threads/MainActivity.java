@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String cipher = cipherTextView.getText().toString();
                 shift = Integer.parseInt(userInput.getText().toString());
+                progressBar.setMax(cipher.length());
                 new DecryptCypherAsync().execute(cipher);
             }
         });
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
+            progressBar.setProgress(values[0]);
         }
 
         @Override
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            int shifts = 0;
             String newString = "";
             char c;
             for (int i = 0; i < strings[0].length(); i++) {
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                     c = (char) (strings[0].charAt(i) + shift);
                 }
                 newString += c;
+                publishProgress(shifts);
+                shifts++;
             }
            // System.out.println(newString);
             return newString;
