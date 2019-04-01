@@ -40,9 +40,16 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shift Cypher"
+        android:text="Shift Cipher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/button_cancel"
+        android:text="Cancel Cipher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <EditText
         android:inputType="numberSigned"
