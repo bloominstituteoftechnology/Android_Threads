@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editInput;
     Button buttonSubmit;
     TextView textCipher;
+    DecryptThread decryptThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cipherString = textCipher.getText().toString();
-                new DecryptThread().execute(cipherString);
+                progressBar.setMax(cipherString.length());
+                decryptThread = new DecryptThread();
+                decryptThread.execute(cipherString);
 
                 /*progressBar.setVisibility(View.VISIBLE);
                 String cipherString = textCipher.getText().toString();
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     public class DecryptThread extends AsyncTask<String, Integer, String>{
         @Override
         protected void onPreExecute() {
+            buttonSubmit.setVisibility(View.GONE);
+            editInput.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -92,13 +97,16 @@ public class MainActivity extends AppCompatActivity {
                         }*/
                     char shiftedChar = ALPHABET.charAt(shiftedPosition);
                     shiftedCipher += shiftedChar;
+                    publishProgress(i);
                 }else if(UPPER_CASE_ALPHABET.indexOf(strings[0].charAt(i)) != -1){
                     int position = UPPER_CASE_ALPHABET.indexOf(strings[0].charAt(i));
                     int shiftedPosition = (position + shiftTimes) % 26;
                     char shiftedChar = UPPER_CASE_ALPHABET.charAt(shiftedPosition);
                     shiftedCipher += shiftedChar;
+                    publishProgress(i);
                 }else{
                     shiftedCipher += strings[0].charAt(i);
+                    publishProgress(i);
                 }
 
             }
@@ -109,6 +117,26 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             textCipher.setText(s);
             progressBar.setVisibility(View.GONE);
+            buttonSubmit.setVisibility(View.VISIBLE);
+            editInput.setVisibility(View.VISIBLE);
         }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressBar.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onCancelled() {
+            progressBar.setVisibility(View.GONE);
+            buttonSubmit.setVisibility(View.VISIBLE);
+            editInput.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        decryptThread.cancel(true);
     }
 }

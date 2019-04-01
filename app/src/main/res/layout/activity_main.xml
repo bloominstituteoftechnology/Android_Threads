@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
             android:visibility="gone"
             android:id="@+id/progress_bar"
             android:layout_width="0dp"
