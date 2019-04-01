@@ -3,6 +3,7 @@ package com.rybarstudios.cyphers;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String content = mTextView.getText().toString();
                 String charsToShift = mEditText.getText().toString();
+                mProgressBar.setMax(31468);
                 new AddCypherAsync().execute(content, charsToShift);
             }
         });
@@ -60,8 +62,14 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     result += content.charAt(i);
                 }
+                publishProgress(i, content.length());
             }
             return result;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            mProgressBar.setProgress(values[0]);
         }
 
         @Override
