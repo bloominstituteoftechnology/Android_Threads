@@ -73,13 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 if (Character.isLetter(c)) {
                     c = (char) (strings[0].charAt(i) + shift);
                 }
-                    /*if (Character.isLowerCase((cipher.charAt(i))) && c > 'z'
-                    || Character.isUpperCase(cipher.charAt(i)) && c > 'Z') {
-                        c = (char) (cipher.charAt(i) - (26 - shift));
-                    } */
-
-                if (strings[0].charAt(i) > 'Z' - shift || strings[0].charAt(i) > 'z' - shift) {
-                    c = (char) (strings[0].charAt(i) + shift);
+                if ((c < 'A' && c > 'A' + shift)
+                || (c < 'a' && c > 'a' + shift )) {
+                    c += 26;
                 }
                 newString += c;
                 publishProgress(shifts);
