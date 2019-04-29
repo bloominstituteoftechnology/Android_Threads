@@ -5,21 +5,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
      TextView textView;
      ProgressBar progressBar;
      static boolean backgroundCancel = false;
+     Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.text_view);
+        spinner = findViewById(R.id.spinner);
+        String[] items;
+        try {
+            items = getAssets().list("");
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(spinnerAdapter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Button cancelButton = findViewById(R.id.button_cancel);
         Button shiftButton = findViewById(R.id.button);
@@ -45,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         shift = shift % 26;
         if (shift == 0) return msg;
         for (int i = 0; i < msg.length(); i++) {
-            task.doProgress(i);
+            task.doProgress(i*100/msg.length());
             if (backgroundCancel == true) return msg;
             char character = msg.charAt(i);
             char shiftedChar = (char) (msg.charAt(i) + shift);
@@ -102,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            progressBar.setMax(textView.getText().length());
+            progressBar.setMax(100);
             progressBar.setProgress(values[0]);
         }
 
