@@ -48,13 +48,24 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_shift_cipher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Shift Cipher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save File"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <Button
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/button_cancel"
@@ -65,8 +76,8 @@
     <EditText
         android:inputType="numberSigned"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/button"
-        app:layout_constraintLeft_toRightOf="@id/button"
+        app:layout_constraintBaseline_toBaselineOf="@id/button_shift_cipher"
+        app:layout_constraintLeft_toRightOf="@id/button_shift_cipher"
         android:backgroundTint="@android:color/holo_orange_light"
         android:background="@android:color/holo_orange_light"
         android:hint="0"
