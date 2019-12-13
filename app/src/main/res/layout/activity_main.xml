@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/cypher_text"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/contents_shifted"/>
+
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/shift_by_view"
+        android:layout_margin="10dp"
+        android:inputType="number"
+        app:layout_constraintRight_toLeftOf="@id/button_Shift"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="Shift By : "/>
+
+    <Button
+        android:id="@+id/button_Shift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Shift" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/shift_by_view"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>
